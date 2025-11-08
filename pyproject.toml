@@ -12,8 +12,14 @@ dependencies = [
     "rich (>=14.2.0,<15.0.0)"
 ]
 
+[project.scripts]
+silentlovefilter = "silentlovefilter.main:app"
+
 [tool.poetry]
 packages = [{include = "silentlovefilter", from = "src"}]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^9.0.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

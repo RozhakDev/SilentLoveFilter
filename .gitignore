@@ -11,3 +11,6 @@ poetry.lock
 
 # OS specific
 .DS_Store
+
+# Test cache / pytest
+.pytest_cache/

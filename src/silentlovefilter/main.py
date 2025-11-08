@@ -1,39 +1,29 @@
-import subprocess
-import sys
-from pathlib import Path
 import typer
-from rich.console import Console
+from pathlib import Path
+from silentlovefilter.core.denoiser import clean_audio
 
 app = typer.Typer(add_completion=False)
-console = Console()
-
-def clean_audio(input_file: Path, output_file: Path):
-    if not input_file.exists():
-        console.print(f"[bold red]Error: File not found → {input_file}[/]")
-        raise typer.Exit(1)
-
-    cmd = [
-        "ffmpeg", "-y", "-i", str(input_file),
-        "-af", "highpass=f=80,lowpass=f=4000,afftdn=nf=-25",
-        str(output_file)
-    ]
-    
-    console.print("[bold cyan]Cleaning audio...[/]")
-    result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    
-    if result.returncode != 0:
-        console.print("[bold red]FFmpeg error:[/]")
-        console.print(result.stderr)
-        raise typer.Exit(1)
-    
-    console.print("[bold green]Done! →[/] " + str(output_file))
 
 @app.command()
 def main(
-    input: Path = typer.Argument(..., help="Input audio file"),
-    output: Path = typer.Argument(..., help="Output audio file")
+    input_path: str = typer.Argument(..., help="Input audio file"),
+    output_path: str = typer.Argument(..., help="Output audio file"),
+    love_level: int = typer.Option(3, "--love-level", min=1, max=5, help="Denoise intensity (1 mild - 5 aggressive)")
 ):
-    clean_audio(input, output)
+    """
+    Clean the audio by reducing noise with a love-powered algorithm.
+
+    Args:
+        input_file (Path): Path to the input audio file.
+        output_file (Path): Path to save the processed audio file.
+        love_level (int): Intensity of denoise (1 to 5).
+
+    Returns:
+        None
+    """
+    input_file = Path(input_path)
+    output_file = Path(output_path)
+    clean_audio(input_file, output_file, love_level)
 
 if __name__ == "__main__":
     app()
