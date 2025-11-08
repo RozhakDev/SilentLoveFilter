@@ -1,0 +1,13 @@
+# Bytecode & cache
+__pycache__/
+*.py[cod]
+
+# Poetry
+poetry.lock
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# OS specific
+.DS_Store
