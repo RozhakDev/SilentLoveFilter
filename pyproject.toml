@@ -9,11 +9,13 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "typer (>=0.20.0,<0.21.0)",
-    "rich (>=14.2.0,<15.0.0)"
+    "rich (>=14.2.0,<15.0.0)",
+    "pydub (>=0.25.1,<1.0.0)",
+    "pygame (>=2.5.0,<3.0.0)"
 ]
 
 [project.scripts]
-silentlovefilter = "silentlovefilter.main:app"
+silentlovefilter = "silentlovefilter.cli.main:app"
 
 [tool.poetry]
 packages = [{include = "silentlovefilter", from = "src"}]
